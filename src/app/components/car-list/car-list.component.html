@@ -1,0 +1,41 @@
+<body class="bg-white">
+  <div class="container mx-auto py-10">
+    <h1 class="text-3xl font-bold text-center mb-8">
+      Angular v19 - Loading with defer block and new resource API
+    </h1>
+
+    <div class="flex justify-around my-5 bg-blue-600 text-white p-5 rounded-lg">
+      <div>Status: {{ carsResource.status() }}</div>
+      <div>Error: {{ carsResource.error() }}</div>
+      <div>isLoading: {{ carsResource.isLoading() }}</div>
+     </div>
+
+    @if (carsResource.isLoading()) {
+      <div class="flex justify-center">
+        <span class="loading loading-spinner loading-lg"></span>
+      </div>
+    }
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      @for (car of carsResource.value(); track $index) {
+        @defer (on viewport) {
+          <app-card
+            [id]="car.id"
+            [brand]="car.make"
+            [model]="car.model"
+            [image]="car.image"
+            [price]="car.price"
+            [year]="car.year"
+            [fuel]="car.engine"
+            [fuelType]="car.fuelType" />
+        } @loading (after 100ms; minimum 1s) {
+          <span class="loading loading-spinner loading-lg"></span>
+        } @placeholder (minimum 500ms) {
+          <app-card-skeleton />
+        } @error {
+          <p>Failed to load content.</p>
+        }
+      }
+    </div>
+  </div>
+</body>

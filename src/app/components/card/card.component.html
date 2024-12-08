@@ -1,0 +1,16 @@
+<div class="card bg-base-100 shadow-xl">
+  <figure>
+    <img [src]="image()" alt="image" class="h-48 w-full object-cover" />
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title">{{ brand() }} {{ model() }}</h2>
+    <p>Year: {{ year() }}</p>
+    <p>Fuel: {{ fuelType() }}</p>
+    <p>Price: {{ price() }}</p>
+    <div class="card-actions justify-end">
+      <button [routerLink]="['/details', id()]" class="btn btn-primary">
+        View Details
+      </button>
+    </div>
+  </div>
+</div>
